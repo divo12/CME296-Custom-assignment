@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cme296-custom-assignments"
+version = "2026.1.0"
+description = "CS336-style From-Scratch Assignments for Stanford CME 296 (Lectures 1-5: Diffusion, Score Matching, Flow Matching, Latent Space & Guidance, U-Net/DiT/MM-DiT)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+    "torch>=2.2.0",
+    "numpy>=1.24.0",
+    "pytest>=7.4.0",
+    "matplotlib>=3.7.0",
+]
+
+[project.optional-dependencies]
+vision = [
+    "torchvision>=0.17.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["cme296_assignments*", "cme296_datasets*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
