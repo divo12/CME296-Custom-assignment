@@ -6,11 +6,11 @@ This repository fills that gap with **five rigorous, from-scratch assignments** 
 
 | Assignment | CME 296 Lecture | Core Derivations, Primitives Built From Scratch, & Experiments | Points | Graded By |
 | :--- | :--- | :--- | :---: | :--- |
-| **[Assignment 1](handouts/assignment1_diffusion.md)** | **Lec 1: Discrete-Time Diffusion** | Markov jump & VP variance proofs, resolution log-SNR shift, linear & cosine schedules, full ELBO & Bayes posterior $q(x_{t-1}\mid x_t, x_0)$, $(\epsilon, x_0, v)$ + Min-SNR-$\gamma$ equivalence, ancestral DDPM & strided non-Markovian **DDIM** ($\eta \in [0, 1]$), `slerp` interpolation | **50** | `tests/test_a1_diffusion.py` |
-| **[Assignment 2](handouts/assignment2_score_sde.md)** | **Lec 2: Score Matching & SDEs** | Partition-function cancellation, Hyvärinen **ISM** + **Hutchinson Rademacher trace** (`create_graph=True`), Vincent **DSM**, low-density mode blindness proof, **Annealed Langevin Dynamics**, continuum **VP-SDE & VE-SDE**, reverse Euler-Maruyama, Fokker-Planck $\to$ **PF-ODE** ($\frac{1}{2}$ factor) | **50** | `tests/test_a2_score_sde.py` |
-| **[Assignment 3](handouts/assignment3_flow_matching.md)** | **Lec 3: Flow Matching & Rectified Flow** | NF/CNF Jacobian bottlenecks, **$t=0\leftrightarrow 1$ convention bridge**, **CFM** marginal-gradient proof, OT paths, equal-NFE **Euler vs. Heun** solvers, crossing-chords analysis + **Reflow** & trajectory straightness, **$5\times 5$ Grand Unification Rosetta Stone** | **50** | `tests/test_a3_flow_matching.py` |
+| **[Assignment 1](handouts/assignment1_diffusion.md)** | **Lec 1: Discrete-Time Diffusion** | Markov jump & VP variance proofs, resolution log-SNR shift, linear & cosine schedules, full ELBO & Bayes posterior, $(\epsilon, x_0, v)$ + Min-SNR equivalence, ancestral DDPM & strided non-Markovian **DDIM** ($\eta \in [0, 1]$), `slerp` interpolation | **50** | `tests/test_a1_diffusion.py` |
+| **[Assignment 2](handouts/assignment2_score_sde.md)** | **Lec 2: Score Matching & SDEs** | Partition-function cancellation, Hyvärinen **ISM** + **Hutchinson Rademacher trace** (`create_graph=True`), Vincent **DSM**, low-density mode blindness proof, **Annealed Langevin Dynamics**, continuum **VP-SDE & VE-SDE**, reverse Euler-Maruyama, Fokker-Planck to **PF-ODE** (one-half factor) | **50** | `tests/test_a2_score_sde.py` |
+| **[Assignment 3](handouts/assignment3_flow_matching.md)** | **Lec 3: Flow Matching & Rectified Flow** | NF/CNF Jacobian bottlenecks, $t = 0 \leftrightarrow 1$ convention bridge, **CFM** marginal-gradient proof, OT paths, equal-NFE **Euler vs. Heun** solvers, crossing-chords analysis + **Reflow** & trajectory straightness, $5 \times 5$ **Grand Unification Rosetta Stone** | **50** | `tests/test_a3_flow_matching.py` |
 | **[Assignment 4](handouts/assignment4_latent_guidance.md)** | **Lec 4: Latent Space & Guidance** | **VAE** ELBO & closed-form Gaussian KL, Stable Diffusion's `0.18215` **`LatentScaler`** SNR mystery, from-scratch **CLIP** vs. **SigLIP** (distributed scaling & $-10$ bias init), **Classifier Guidance** vs. **CFG** + **Lin et al. Std-Rescaling** | **50** | `tests/test_a4_latent_guidance.py` |
-| **[Assignment 5](handouts/assignment5_architectures.md)** | **Lec 5: Vision Architectures** | Skip variance scaling, sinusoidal time & **FiLM U-Net ResBlock**, `patchify`/`unpatchify`, **2D Axial RoPE**, **`adaLN-Zero` DiT** (step-0 identity & 2-step gradient unblocking), **MM-DiT** double-stream joint attention, **CS336-style `DiT-XL/2` FLOPs & memory accounting** | **50** | `tests/test_a5_architectures.py` |
+| **[Assignment 5](handouts/assignment5_architectures.md)** | **Lec 5: Vision Architectures** | Skip variance scaling, sinusoidal time & **FiLM U-Net ResBlock**, `patchify` / `unpatchify`, **2D Axial RoPE**, **`adaLN-Zero` DiT** (step-0 identity & 2-step gradient unblocking), **MM-DiT** double-stream joint attention, **CS336-style `DiT-XL/2` FLOPs & memory accounting** | **50** | `tests/test_a5_architectures.py` |
 
 ---
 
@@ -51,6 +51,7 @@ CME296-Custom-assignment/
 ## Quickstart
 
 ### 1. Environment Setup
+
 Works with `uv` (CS336 style) or standard `pip` / `venv` on CPU, Apple Silicon (`mps`), or NVIDIA GPUs (`cuda`):
 
 ```bash
@@ -66,16 +67,20 @@ pytest
 Out of the box, running `pytest` will collect **28 test suites** across Assignments 1–5 and fail with `NotImplementedError` until you wire each adapter in `tests/adapters.py`.
 
 ### 2. Recommended Workflow (Per Lecture)
+
 1. Watch the **[CME 296 lecture](https://cme296.stanford.edu/syllabus/)** alongside the **[CME 296 VIP Cheatsheet](https://github.com/afshinea/stanford-cme-296-diffusion-large-vision-models)**.
 2. Open `handouts/assignment<k>_*.md` and solve the **Written / Brainstorming** problems on paper first — they are specifically designed to expose the subtle traps before you write code.
 3. Implement the primitives from scratch in `cme296_assignments/`, connect `tests/adapters.py`, and run:
-   ```bash
-   pytest tests/test_a1_diffusion.py
-   ```
-4. Run the **Low-Resource Experiment** at the end of the handout using `cme296_datasets` (each runs in `< 15–60s` on a laptop!).
+
+```bash
+pytest tests/test_a1_diffusion.py
+```
+
+4. Run the **Low-Resource Experiment** at the end of the handout using `cme296_datasets` (each runs in under 15–60 seconds on a laptop).
 
 ---
 
 ## Credits & References
-- Course syllabus & cheatsheet structure inspired by **[Stanford CME 296: Diffusion & Large Vision Models](https://cme296.stanford.edu/)** by Afshine Amidi & Shervine Amidi.
+
+- Course syllabus and cheatsheet structure inspired by **[Stanford CME 296: Diffusion & Large Vision Models](https://cme296.stanford.edu/)** by Afshine Amidi & Shervine Amidi.
 - Assignment architecture (`adapters.py`, from-scratch constraints, FLOPs accounting, and `AGENTS.md`) inspired by **[Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/)**.
